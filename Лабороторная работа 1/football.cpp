@@ -2,60 +2,73 @@
 #include <iostream>
 using namespace std;
 
+// Конструктор 1: полный
 Football::Football(string name, int players, string stadium, int score1, int score2)
     : SportEvent(name, players), stadiumName(stadium), team1Score(score1), team2Score(score2) 
-{
-}
+{}
+
+// Конструктор 2: без счёта
+Football::Football(string name, int players, string stadium)
+    : SportEvent(name, players), stadiumName(stadium), team1Score(0), team2Score(0) 
+{}
+
+// Конструктор 3: минимальный
+Football::Football(string name, int players)
+    : SportEvent(name, players), stadiumName("Стандартный стадион"), team1Score(0), team2Score(0) 
+{}
 
 void Football::startGame() {
     isActive = true;
     cout << eventName << " (футбол) начался!" << endl;
     cout << "  Стадион: " << stadiumName << endl;
     cout << "  На поле " << playersCount << " игроков" << endl;
+    cout << "  Текущий счет: " << team1Score << " : " << team2Score << endl;
 }
 
 void Football::stopGame() {
     isActive = false;
-    cout << eventName << " (футбол) завершен." << endl;
-    showScore();
+    cout << eventName << " (футбол) завершен. Финальный счет: " 
+         << team1Score << " : " << team2Score << endl;
 }
 
-void Football::showScore() {
-    cout << "Счет: " << team1Score << " : " << team2Score << endl;
+void Football::showInfo() {
+    cout << "Событие: " << eventName 
+         << " | Вид спорта: Футбол"
+         << " | Статус: " << (isActive ? "ИДЕТ МАТЧ" : "НЕ АКТИВЕН")
+         << " | Игроков: " << playersCount
+         << " | Стадион: " << stadiumName
+         << " | Счет: " << team1Score << " : " << team2Score << endl;
 }
 
 void Football::shootOnGoal(string team) {
     if (!isActive) {
-        cout << eventName << ": Игра не активна! Сначала начните матч." << endl;
+        cout << eventName << ": Сначала начните матч!" << endl;
         return;
     }
     
-    cout << team << ": Удар по воротам! ";
+    cout << eventName << ": " << team << " - удар по воротам! ";
     
-    // Симуляция гола (50% вероятность)
-    bool isGoal = rand() % 2;
+    // Симуляция гола (30% вероятности)
+    bool isGoal = (rand() % 10) < 3;
     if (isGoal) {
-        if (team == "Команда 1") {
+        if (team == "Команда 1" || team == "хозяева") {
             team1Score++;
-            cout << "ГОООЛ! Счет: " << team1Score << " : " << team2Score << endl;
-        } else if (team == "Команда 2") {
+            cout << "ГООООЛ! Счет: " << team1Score << " : " << team2Score << endl;
+        } else if (team == "Команда 2" || team == "гости") {
             team2Score++;
-            cout << "ГОООЛ! Счет: " << team1Score << " : " << team2Score << endl;
-        } else {
-            cout << "Мяч в аут!" << endl;
+            cout << "ГООООЛ! Счет: " << team1Score << " : " << team2Score << endl;
         }
     } else {
-        cout << "Вратарь спасает команду!" << endl;
+        cout << "Мимо ворот!" << endl;
     }
 }
 
 void Football::substitutePlayer(string playerOut, string playerIn) {
     if (!isActive) {
-        cout << eventName << ": Замена возможна только во время игры!" << endl;
+        cout << eventName << ": Замена возможна только во время матча!" << endl;
         return;
     }
     
-    cout << eventName << ": Замена игрока " << playerOut 
-         << " на " << playerIn << endl;
-    cout << "  " << playersCount << " игроков на поле (без учета замен)" << endl;
+    cout << eventName << ": Замена - " << playerOut << " уходит, " 
+         << playerIn << " выходит на поле" << endl;
 }
