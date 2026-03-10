@@ -15,7 +15,7 @@ public:
     
     virtual void startGame() = 0;
     virtual void stopGame() = 0;
-    virtual void showScore() = 0;
+    virtual void showInfo() = 0;
     
     string getName();
     int getPlayersCount();
