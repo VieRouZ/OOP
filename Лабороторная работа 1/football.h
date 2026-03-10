@@ -11,16 +11,14 @@ private:
     int team2Score;
 
 public:
-    // Значения по умолчанию
-    Football(string name = "Футбольный матч", 
-             int players = 22, 
-             string stadium = "Стандартный стадион",
-             int score1 = 0, 
-             int score2 = 0);
+    // Три конструктора
+    Football(string name, int players, string stadium, int score1, int score2);
+    Football(string name, int players, string stadium);
+    Football(string name, int players);
     
     void startGame() override;
     void stopGame() override;
-    void showScore() override;
+    void showInfo() override;
     
     void shootOnGoal(string team);
     void substitutePlayer(string playerOut, string playerIn);
