@@ -13,18 +13,14 @@ private:
     int currentGame;
 
 public:
-    // Значения по умолчанию
-    Tennis(string name = "Теннисный матч", 
-           int players = 2, 
-           string surface = "Грунт",
-           int sets = 3,
-           int score1 = 0,
-           int score2 = 0,
-           int game = 1);
+    // Три конструктора
+    Tennis(string name, int players, string surface, int sets, int score1, int score2, int game);
+    Tennis(string name, int players, string surface, int sets);
+    Tennis(string name, int players);
     
     void startGame() override;
     void stopGame() override;
-    void showScore() override;
+    void showInfo() override;
     
     void changeSides();
     void serve(string player);
